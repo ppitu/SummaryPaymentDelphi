@@ -17,6 +17,7 @@ type
   private
     FId: Integer;
     FName: String;
+    FDescription: String;
   end;
 
 implementation
