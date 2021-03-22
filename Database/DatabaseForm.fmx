@@ -1,0 +1,74 @@
+object FormDatabase: TFormDatabase
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object DBConnection: TFDConnection
+    Params.Strings = (
+      
+        'Database=D:\Delphi\SummaryPayment\Win32\Debug\db\symmarypayment.' +
+        'db'
+      'DriverID=SQLite')
+    Connected = True
+    LoginPrompt = False
+    Left = 24
+    Top = 8
+  end
+  object FDTransaction1: TFDTransaction
+    Connection = DBConnection
+    Left = 24
+    Top = 64
+  end
+  object Products: TFDTable
+    Active = True
+    IndexFieldNames = 'id'
+    Connection = DBConnection
+    Transaction = FDTransaction1
+    UpdateOptions.UpdateTableName = 'products'
+    TableName = 'products'
+    Left = 336
+    Top = 64
+  end
+  object Q_product: TFDQuery
+    Active = True
+    ObjectView = False
+    Connection = DBConnection
+    Transaction = FDTransaction1
+    UpdateObject = up_product
+    SQL.Strings = (
+      'SELECT * FROM products')
+    Left = 336
+    Top = 8
+  end
+  object up_product: TFDUpdateSQL
+    Connection = DBConnection
+    InsertSQL.Strings = (
+      'INSERT INTO PRODUCTS'
+      '(NAME)'
+      'VALUES (:NEW_name);'
+      'SELECT LAST_INSERT_AUTOGEN() AS ID')
+    ModifySQL.Strings = (
+      'UPDATE PRODUCTS'
+      'SET ID = :NEW_id, NAME = :NEW_name'
+      'WHERE ID = :OLD_id;'
+      'SELECT ID'
+      'FROM PRODUCTS'
+      'WHERE ID = :NEW_id')
+    DeleteSQL.Strings = (
+      'DELETE FROM PRODUCTS'
+      'WHERE ID = :OLD_id')
+    FetchRowSQL.Strings = (
+      'SELECT ID, NAME'
+      'FROM PRODUCTS'
+      'WHERE ID = :OLD_id')
+    Left = 336
+    Top = 120
+  end
+end

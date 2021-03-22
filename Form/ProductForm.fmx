@@ -1,0 +1,39 @@
+object FormProduct: TFormProduct
+  Left = 0
+  Top = 0
+  Caption = 'ProductForm'
+  ClientHeight = 247
+  ClientWidth = 352
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnClose = FormClose
+  DesignerMasterStyle = 0
+  object edtName: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 0
+    Position.X = 48.000000000000000000
+    Position.Y = 48.000000000000000000
+  end
+  object lblName: TLabel
+    Position.X = 48.000000000000000000
+    Position.Y = 24.000000000000000000
+    Size.Width = 97.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Nazwa'
+    TabOrder = 1
+  end
+  object btnOK: TButton
+    Position.X = 136.000000000000000000
+    Position.Y = 200.000000000000000000
+    TabOrder = 2
+    Text = 'OK'
+  end
+  object btnCancel: TButton
+    Position.X = 240.000000000000000000
+    Position.Y = 200.000000000000000000
+    TabOrder = 3
+    Text = 'Anuluj'
+  end
+end
