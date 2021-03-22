@@ -9,7 +9,8 @@ uses
   FMX.Grid.Style, FMX.Grid, FMX.Controls.Presentation, FMX.ScrollBox,
   DatabaseForm, FMX.StdCtrls, Data.Bind.EngExt, FMX.Bind.DBEngExt,
   FMX.Bind.Grid, System.Bindings.Outputs, FMX.Bind.Editors,
-  Data.Bind.Components, Data.Bind.Grid, Data.Bind.DBScope, ProductForm, Product;
+  Data.Bind.Components, Data.Bind.Grid, Data.Bind.DBScope, ProductForm, Product,
+  FMX.TabControl;
 
 type
   TForm1 = class(TForm)
@@ -19,6 +20,8 @@ type
     BindingsList1: TBindingsList;
     LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource;
     Button2: TButton;
+    TabControl1: TTabControl;
+    tabProduct: TTabItem;
     procedure Button1Click(Sender: TObject);
   private
     { Private declarations }

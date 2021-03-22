@@ -43,10 +43,9 @@ procedure TProduct.SaveToDatabase;
 var
   DataAccess: TDataAccess;
 begin
-  DataAccess := createTableAccess(TTableType.PRODUCTS, true);
+  DataAccess := createTableAccess(TTableType.PRODUCTS, false);
 
   try
-    DataAccess := createTableAccess(TTableType.PRODUCTS, true);
     DataAccess.Insert;
     DataAccess.SetString('name', FName);
     DataAccess.Post;
@@ -57,6 +56,11 @@ begin
       DataAccess.Destroy;
     end;
   end;
+
+  FId := DataAccess.GetInt('id');
+
+  DataAccess.Refresh;
+  DataAccess.Destroy;
 
 end;
 

@@ -2,36 +2,63 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 480
-  ClientWidth = 640
+  ClientHeight = 465
+  ClientWidth = 941
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   DesignerMasterStyle = 0
-  object StringGrid1: TStringGrid
-    CanFocus = True
-    ClipChildren = True
-    Position.X = 96.000000000000000000
-    Position.Y = 128.000000000000000000
-    StyleLookup = 'StringGrid1Style1'
-    TabOrder = 0
-    RowCount = 2
-    Options = [Editing, ColumnResize, ColumnMove, ColLines, RowLines, RowSelect, Tabs, Header, HeaderClick, AutoDisplacement]
-    Viewport.Width = 196.000000000000000000
-    Viewport.Height = 75.000000000000000000
-  end
-  object Button1: TButton
-    Position.X = 304.000000000000000000
-    Position.Y = 280.000000000000000000
-    TabOrder = 1
-    Text = 'Button1'
-    OnClick = Button1Click
-  end
-  object Button2: TButton
-    Position.X = 464.000000000000000000
-    Position.Y = 280.000000000000000000
+  object TabControl1: TTabControl
+    Align = Fit
+    Size.Width = 941.000000000000000000
+    Size.Height = 366.861572265625000000
+    Size.PlatformDefault = False
+    TabIndex = 0
     TabOrder = 4
-    Text = 'Button2'
+    TabPosition = PlatformDefault
+    Sizes = (
+      941s
+      340.861572265625s)
+    object tabProduct: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 79.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'tabProduct'
+      object StringGrid1: TStringGrid
+        Align = Horizontal
+        CanFocus = True
+        ClipChildren = True
+        Position.Y = 2.000000000000000000
+        Size.Width = 941.000000000000000000
+        Size.Height = 239.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'StringGrid1Style1'
+        TabOrder = 0
+        RowCount = 0
+        Options = [Editing, ColumnResize, ColumnMove, ColLines, RowLines, RowSelect, Tabs, Header, HeaderClick, AutoDisplacement]
+        Viewport.Width = 937.000000000000000000
+        Viewport.Height = 214.000000000000000000
+      end
+      object Button1: TButton
+        Position.X = 592.000000000000000000
+        Position.Y = 280.000000000000000000
+        TabOrder = 1
+        Text = 'Button1'
+        OnClick = Button1Click
+      end
+      object Button2: TButton
+        Position.X = 721.000000000000000000
+        Position.Y = 280.000000000000000000
+        TabOrder = 2
+        Text = 'Button2'
+      end
+    end
   end
   object BindSourceDB1: TBindSourceDB
     DataSet = FormDatabase.Products

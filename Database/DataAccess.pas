@@ -12,7 +12,9 @@ type
     destructor Destroy; override;
     procedure Insert;
     procedure Post;
+    procedure Refresh;
     procedure SetString(field, value: String);
+    function GetInt(field: String): Integer;
 
   private
     FDataSet: TDataSet;
@@ -58,9 +60,28 @@ begin
   end;
 end;
 
+procedure TDataAccess.Refresh;
+begin
+  FDataSet.Close;
+  FDataSet.Open;
+end;
+
 procedure TDataAccess.SetString(field: String; value: String);
 begin
   FDataSet.FieldByName(field).AsString := value;
+end;
+
+function TDataAccess.GetInt(field: String): Integer;
+begin
+  try
+    result := FDataSet.FieldByName(field).AsInteger;
+  except
+    on E: Exception do
+    begin
+      Error.SaveToFile(E.ClassName, E.Message);
+      result := 0;
+    end;
+  end;
 end;
 
 function createTableAccess(tableType: TTableType; close: Boolean): TDataAccess;

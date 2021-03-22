@@ -15,8 +15,9 @@ object FormDatabase: TFormDatabase
       
         'Database=D:\Delphi\SummaryPayment\Win32\Debug\db\symmarypayment.' +
         'db'
-      'DriverID=SQLite')
-    Connected = True
+      'DriverID=SQLite'
+      'LockingMode=Normal'
+      'SharedCache=False')
     LoginPrompt = False
     Left = 24
     Top = 8
@@ -27,7 +28,6 @@ object FormDatabase: TFormDatabase
     Top = 64
   end
   object Products: TFDTable
-    Active = True
     IndexFieldNames = 'id'
     Connection = DBConnection
     Transaction = FDTransaction1
@@ -37,7 +37,6 @@ object FormDatabase: TFormDatabase
     Top = 64
   end
   object Q_product: TFDQuery
-    Active = True
     ObjectView = False
     Connection = DBConnection
     Transaction = FDTransaction1
