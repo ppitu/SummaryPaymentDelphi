@@ -50,6 +50,7 @@ begin
     DataAccess.Insert;
     DataAccess.SetString('name', FName);
     DataAccess.Post;
+    ShowMessage('lol');
   except
     on E: Exception do
     begin
