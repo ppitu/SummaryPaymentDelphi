@@ -3,7 +3,7 @@ unit DataAccess;
 interface
 
 uses
-  Data.DB, DatabaseForm, FireDAC.Comp.Client, Error, SysUtils;
+  Data.DB, DatabaseForm, FireDAC.Comp.Client, Error, SysUtils, Messages;
 
 type
   TDataAccess = class
@@ -12,6 +12,7 @@ type
     destructor Destroy; override;
     procedure Insert;
     procedure Post;
+    procedure Delete;
     procedure Refresh;
     procedure SetString(field, value: String);
     function GetInt(field: String): Integer;
@@ -60,9 +61,22 @@ begin
   end;
 end;
 
+procedure TDataAccess.Delete;
+begin
+  try
+    FDataSet.Delete;
+  except
+    on E: Exception do
+    begin
+      Error.SaveToFile(E.ClassName, E.Message);
+      Messages.showMessage(EMessageValue.MSG_RECORD_REMOVE_ERROR);
+    end;
+  end;
+end;
+
 procedure TDataAccess.Refresh;
 begin
-  FDataSet.Close;
+  FDataSet.close;
   FDataSet.Open;
 end;
 

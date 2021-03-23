@@ -3,7 +3,7 @@ unit Product;
 interface
 
 uses
-  DatabaseForm, DataAccess, Error, SysUtils;
+  DatabaseForm, DataAccess, Error, SysUtils, Data.DB, Messages;
 
 type
   TProduct = class
@@ -11,7 +11,8 @@ type
     constructor Create(id: Integer; Name: String);
     procedure SetId(id: Integer);
     procedure SetName(Name: String);
-    procedure SaveToDatabase;
+    procedure Save;
+    procedure Delete;
     function GetId: Integer;
     function GetName: String;
   private
@@ -19,6 +20,8 @@ type
     FName: String;
     FDescription: String;
   end;
+
+procedure Remove(dataSource: Data.DB.TDataSource);
 
 implementation
 
@@ -40,25 +43,29 @@ begin
   FName := name;
 end;
 
-procedure TProduct.SaveToDatabase;
+procedure TProduct.Save;
 var
   DataAccess: TDataAccess;
 begin
-  DataAccess := createTableAccess(TTableType.PRODUCTS, false);
+  DataAccess := createTableAccess(TTableType.Products, false);
 
-  try
-    DataAccess.Insert;
-    DataAccess.SetString('name', FName);
-    DataAccess.Post;
-  except
-    on E: Exception do
-    begin
-      Error.SaveToFile(E.ClassName, E.Message);
-      DataAccess.Destroy;
-    end;
-  end;
+  DataAccess.Insert;
+  DataAccess.SetString('name', FName);
+  DataAccess.Post;
 
   FId := DataAccess.GetInt('id');
+
+  DataAccess.Refresh;
+  DataAccess.Destroy;
+
+end;
+
+procedure TProduct.Delete;
+var
+  DataAccess: TDataAccess;
+begin
+  DataAccess := createTableAccess(TTableType.Products, false);
+  DataAccess.Delete;
 
   DataAccess.Refresh;
   DataAccess.Destroy;
@@ -73,6 +80,20 @@ end;
 function TProduct.GetName;
 begin
   Result := FName;
+end;
+
+procedure Remove(dataSource: Data.DB.TDataSource);
+begin
+  try
+    dataSource.DataSet.Delete;
+    dataSource.DataSet.Refresh;
+  except
+    on E: Exception do
+    begin
+      Error.SaveToFile(E.ClassName, E.Message);
+      Messages.showMessage(EMessageValue.MSG_RECORD_REMOVE_ERROR);
+    end;
+  end;
 end;
 
 end.

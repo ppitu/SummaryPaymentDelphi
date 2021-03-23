@@ -16,13 +16,16 @@ type
   TForm1 = class(TForm)
     StringGrid1: TStringGrid;
     Button1: TButton;
-    BindSourceDB1: TBindSourceDB;
+    bsProducts: TBindSourceDB;
     BindingsList1: TBindingsList;
     LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource;
     Button2: TButton;
     TabControl1: TTabControl;
     tabProduct: TTabItem;
+    Button3: TButton;
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -46,10 +49,17 @@ begin
 
   FormProduct.ShowModal;
 
-  Product.SaveToDatabase;
+  Product.Save;
+end;
 
-  ShowMessage(Product.GetName);
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  Product.Remove(bsProducts.DataSource);
+end;
 
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+  ShowMessage(bsProducts.DataSource.DataSet.FieldByName('id').DisplayText);
 end;
 
 end.

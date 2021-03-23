@@ -3,12 +3,13 @@ program SummaryPayment;
 uses
   System.StartUpCopy,
   FMX.Forms,
-  MainWindow in 'MainWindow.pas' {Form1} ,
-  DatabaseForm in 'Database\DatabaseForm.pas' {FormDatabase} ,
-  ProductForm in 'Form\ProductForm.pas' {FormProduct} ,
+  MainWindow in 'MainWindow.pas' {Form1},
+  DatabaseForm in 'Database\DatabaseForm.pas' {FormDatabase},
+  ProductForm in 'Form\ProductForm.pas' {FormProduct},
   DataAccess in 'Database\DataAccess.pas',
   Error in 'CommonCode\Error\Error.pas',
-  Product in 'CommonCode\Class\Product.pas';
+  Product in 'CommonCode\Class\Product.pas',
+  Messages in 'CommonCode\Code\Messages.pas';
 
 {$R *.res}
 
