@@ -3,16 +3,18 @@ unit Product;
 interface
 
 uses
-  DatabaseForm, DataAccess, Error, SysUtils, Data.DB, Messages;
+  DatabaseForm, DataAccess, Error, SysUtils, Data.DB, Messages, FMX.Dialogs;
 
 type
   TProduct = class
   public
-    constructor Create(id: Integer; Name: String);
+    constructor Create(id: Integer; Name: String); overload;
+    constructor Create(id: String); overload;
     procedure SetId(id: Integer);
     procedure SetName(Name: String);
     procedure Save;
     procedure Delete;
+    procedure insertDataFromDatabase;
     function GetId: Integer;
     function GetName: String;
   private
@@ -31,6 +33,23 @@ constructor TProduct.Create(id: Integer; Name: string);
 begin
   FId := id;
   FName := name;
+end;
+
+constructor TProduct.Create(id: string);
+var
+  DataAccess: TDataAccess;
+begin
+  DataAccess := createTableAccess(TTableType.Products, false);
+
+  DataAccess.Load('id', id);
+
+  DataAccess.Destroy;
+
+  insertDataFromDatabase;
+
+  FMX.Dialogs.ShowMessage(FName);
+
+
 end;
 
 procedure TProduct.SetId(id: Integer);
@@ -72,6 +91,18 @@ begin
 
 end;
 
+procedure TProduct.insertDataFromDatabase;
+var
+  DataAccess: TDataAccess;
+begin
+  DataAccess := createTableAccess(TTableType.Products, false);
+
+  FId := DataAccess.GetInt('id');
+  FName := DataAccess.GetString('name');
+
+  DataAccess.Destroy;
+end;
+
 function TProduct.GetId;
 begin
   Result := FId;
@@ -95,5 +126,6 @@ begin
     end;
   end;
 end;
+
 
 end.

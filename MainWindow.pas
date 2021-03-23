@@ -58,8 +58,14 @@ begin
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
+var
+  Product: TProduct;
 begin
-  ShowMessage(bsProducts.DataSource.DataSet.FieldByName('id').DisplayText);
+  Product := TProduct.Create(bsProducts.DataSource.DataSet.FieldByName('id').DisplayText);
+
+  ShowMessage(Product.GetName);
+
+  Product.Destroy;
 end;
 
 end.

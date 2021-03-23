@@ -15,7 +15,9 @@ type
     procedure Delete;
     procedure Refresh;
     procedure SetString(field, value: String);
+    function Load(field, value: String): Boolean;
     function GetInt(field: String): Integer;
+    function GetString(field: String): String;
 
   private
     FDataSet: TDataSet;
@@ -80,6 +82,21 @@ begin
   FDataSet.Open;
 end;
 
+function TDataAccess.Load(field: String; value: String): Boolean;
+var
+  locateOptions: TLocateOptions;
+begin
+  if not FDataSet.Active then
+    FDataSet.Open;
+  try
+    result := FDataSet.Locate(field, value, locateOptions);
+  except
+    on E: Exception do
+      Error.SaveToFile(E.ClassName, E.Message);
+  end;
+  result := false;
+end;
+
 procedure TDataAccess.SetString(field: String; value: String);
 begin
   FDataSet.FieldByName(field).AsString := value;
@@ -94,6 +111,19 @@ begin
     begin
       Error.SaveToFile(E.ClassName, E.Message);
       result := 0;
+    end;
+  end;
+end;
+
+function TDataAccess.GetString(field: string): String;
+begin
+  try
+    result := FDataSet.FieldByName(field).ToString;
+  except
+    on E: Exception do
+    begin
+      Error.SaveToFile(E.ClassName, E.Message);
+      result := '';
     end;
   end;
 end;
