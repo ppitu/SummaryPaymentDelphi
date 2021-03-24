@@ -3,7 +3,7 @@ unit DataAccess;
 interface
 
 uses
-  Data.DB, DatabaseForm, FireDAC.Comp.Client, Error, SysUtils, Messages;
+  Data.DB, DatabaseForm, FireDAC.Comp.Client, Error, SysUtils, Messages, FMX.Dialogs;
 
 type
   TDataAccess = class
@@ -11,9 +11,11 @@ type
     constructor Create(dataSet: TDataSet; close: Boolean);
     destructor Destroy; override;
     procedure Insert;
+    procedure Edit;
     procedure Post;
     procedure Delete;
     procedure Refresh;
+    procedure SetInt(field: String; value: Integer);
     procedure SetString(field, value: String);
     function Load(field, value: String): Boolean;
     function GetInt(field: String): Integer;
@@ -45,6 +47,18 @@ procedure TDataAccess.Insert;
 begin
   try
     FDataSet.Insert;
+  except
+    on E: Exception do
+    begin
+      Error.SaveToFile(E.ClassName, E.Message);
+    end;
+  end;
+end;
+
+procedure TDataAccess.Edit;
+begin
+  try
+    FDataSet.Edit;
   except
     on E: Exception do
     begin
@@ -97,6 +111,11 @@ begin
   result := false;
 end;
 
+procedure TDataAccess.SetInt(field: string; value: Integer);
+begin
+  FDataSet.FieldByName(field).AsInteger := value;
+end;
+
 procedure TDataAccess.SetString(field: String; value: String);
 begin
   FDataSet.FieldByName(field).AsString := value;
@@ -118,7 +137,7 @@ end;
 function TDataAccess.GetString(field: string): String;
 begin
   try
-    result := FDataSet.FieldByName(field).ToString;
+    result := FDataSet.FieldByName(field).AsString;
   except
     on E: Exception do
     begin

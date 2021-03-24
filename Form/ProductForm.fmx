@@ -8,6 +8,7 @@ object FormProduct: TFormProduct
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   OnClose = FormClose
+  OnShow = FormShow
   DesignerMasterStyle = 0
   object edtName: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]

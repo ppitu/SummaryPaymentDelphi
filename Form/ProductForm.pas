@@ -15,6 +15,7 @@ type
     btnOK: TButton;
     btnCancel: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,6 +42,11 @@ end;
 procedure TFormProduct.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   FProduct.SetName(edtName.Text);
+end;
+
+procedure TFormProduct.FormShow(Sender: TObject);
+begin
+  edtName.Text := FProduct.GetName;
 end;
 
 end.

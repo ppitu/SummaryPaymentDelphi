@@ -60,10 +60,15 @@ end;
 procedure TForm1.Button3Click(Sender: TObject);
 var
   Product: TProduct;
+  FormProduct: TFormProduct;
 begin
   Product := TProduct.Create(bsProducts.DataSource.DataSet.FieldByName('id').DisplayText);
 
-  ShowMessage(Product.GetName);
+  FormProduct := TFormProduct.CreateWithProduct(Self, Product);
+
+  FormProduct.ShowModal;
+
+  Product.Update;
 
   Product.Destroy;
 end;

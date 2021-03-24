@@ -13,6 +13,7 @@ type
     procedure SetId(id: Integer);
     procedure SetName(Name: String);
     procedure Save;
+    procedure Update;
     procedure Delete;
     procedure insertDataFromDatabase;
     function GetId: Integer;
@@ -46,10 +47,6 @@ begin
   DataAccess.Destroy;
 
   insertDataFromDatabase;
-
-  FMX.Dialogs.ShowMessage(FName);
-
-
 end;
 
 procedure TProduct.SetId(id: Integer);
@@ -77,6 +74,21 @@ begin
   DataAccess.Refresh;
   DataAccess.Destroy;
 
+end;
+
+procedure TProduct.Update;
+var
+  DataAccess: TDataAccess;
+begin
+  DataAccess := createTableAccess(TTableType.Products, false);
+
+  DataAccess.Edit;
+  DataAccess.SetInt('id', FId);
+  DataAccess.SetString('name', FName);
+  DataAccess.Post;
+
+  DataAccess.Refresh;
+  DataAccess.Destroy;
 end;
 
 procedure TProduct.Delete;
