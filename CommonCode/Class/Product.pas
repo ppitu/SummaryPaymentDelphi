@@ -8,20 +8,25 @@ uses
 type
   TProduct = class
   public
-    constructor Create(id: Integer; Name: String); overload;
+    constructor Create(id: Integer; Name, Description: String; Price: Currency); overload;
     constructor Create(id: String); overload;
     procedure SetId(id: Integer);
     procedure SetName(Name: String);
+    procedure SetDescription(Description: String);
+    procedure SetPrice(Price: Currency);
     procedure Save;
     procedure Update;
     procedure Delete;
     procedure insertDataFromDatabase;
     function GetId: Integer;
     function GetName: String;
+    function GetDescription: String;
+    function GetPrice: Currency;
   private
     FId: Integer;
     FName: String;
     FDescription: String;
+    FPrice: Currency;
   end;
 
 procedure Remove(dataSource: Data.DB.TDataSource);
@@ -30,10 +35,12 @@ implementation
 
 { TProduct }
 
-constructor TProduct.Create(id: Integer; Name: string);
+constructor TProduct.Create(id: Integer; Name, Description: string; Price: Currency);
 begin
   FId := id;
   FName := name;
+  FDescription := Description;
+  FPrice := Price;
 end;
 
 constructor TProduct.Create(id: string);
@@ -57,6 +64,16 @@ end;
 procedure TProduct.SetName(Name: string);
 begin
   FName := name;
+end;
+
+procedure TProduct.SetDescription(Description: string);
+begin
+  FDescription := Description;
+end;
+
+procedure TProduct.SetPrice(Price: Currency);
+begin
+  FPrice := Price;
 end;
 
 procedure TProduct.Save;
@@ -85,6 +102,8 @@ begin
   DataAccess.Edit;
   DataAccess.SetInt('id', FId);
   DataAccess.SetString('name', FName);
+  DataAccess.SetString('description', FDescription);
+  DataAccess.SetCurrency('price', FPrice);
   DataAccess.Post;
 
   DataAccess.Refresh;
@@ -111,6 +130,8 @@ begin
 
   FId := DataAccess.GetInt('id');
   FName := DataAccess.GetString('name');
+  FDescription := DataAccess.GetString('description');
+  FPrice := DataAccess.GetCurrency('price');
 
   DataAccess.Destroy;
 end;
@@ -123,6 +144,16 @@ end;
 function TProduct.GetName;
 begin
   Result := FName;
+end;
+
+function TProduct.GetDescription;
+begin
+  Result := FDescription;
+end;
+
+function TProduct.GetPrice;
+begin
+  Result := FPrice;
 end;
 
 procedure Remove(dataSource: Data.DB.TDataSource);

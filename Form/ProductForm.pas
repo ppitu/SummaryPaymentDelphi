@@ -14,8 +14,11 @@ type
     lblName: TLabel;
     btnOK: TButton;
     btnCancel: TButton;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    edtDescription: TEdit;
+    edtPrice: TEdit;
     procedure FormShow(Sender: TObject);
+    procedure btnOKClick(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,6 +35,19 @@ implementation
 
 {$R *.fmx}
 
+procedure TFormProduct.btnCancelClick(Sender: TObject);
+begin
+  Close();
+end;
+
+procedure TFormProduct.btnOKClick(Sender: TObject);
+begin
+  FProduct.SetName(edtName.Text);
+  FProduct.SetDescription(edtdescription.Text);
+  FProduct.SetPrice(StrToCurr(edtPrice.Text));
+  Close();
+end;
+
 constructor TFormProduct.CreateWithProduct(AOwner: TComponent;
   var Product: TProduct);
 begin
@@ -39,14 +55,11 @@ begin
   FProduct := Product;
 end;
 
-procedure TFormProduct.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  FProduct.SetName(edtName.Text);
-end;
-
 procedure TFormProduct.FormShow(Sender: TObject);
 begin
   edtName.Text := FProduct.GetName;
+  edtDescription.Text := FProduct.GetDescription;
+  edtPrice.Text := CurrToStr(FProduct.GetPrice);
 end;
 
 end.

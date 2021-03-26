@@ -17,9 +17,11 @@ type
     procedure Refresh;
     procedure SetInt(field: String; value: Integer);
     procedure SetString(field, value: String);
+    procedure SetCurrency(field: String; value: Currency);
     function Load(field, value: String): Boolean;
     function GetInt(field: String): Integer;
     function GetString(field: String): String;
+    function GetCurrency(field: String): Currency;
 
   private
     FDataSet: TDataSet;
@@ -121,6 +123,11 @@ begin
   FDataSet.FieldByName(field).AsString := value;
 end;
 
+procedure TDataAccess.SetCurrency(field: string; value: Currency);
+begin
+  FDataSet.FieldByName(field).AsCurrency := value;
+end;
+
 function TDataAccess.GetInt(field: String): Integer;
 begin
   try
@@ -143,6 +150,19 @@ begin
     begin
       Error.SaveToFile(E.ClassName, E.Message);
       result := '';
+    end;
+  end;
+end;
+
+function TDataAccess.GetCurrency(field: string): Currency;
+begin
+  try
+    Result := FDataSet.FieldByName(field).AsCurrency;
+  except
+    on E: Exception do
+    begin
+      Error.SaveToFile(E.ClassName, E.Message);
+      Result := 0;
     end;
   end;
 end;

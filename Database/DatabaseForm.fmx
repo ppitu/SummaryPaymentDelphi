@@ -18,6 +18,7 @@ object FormDatabase: TFormDatabase
       'DriverID=SQLite'
       'LockingMode=Normal'
       'SharedCache=False')
+    Connected = True
     LoginPrompt = False
     Left = 24
     Top = 8

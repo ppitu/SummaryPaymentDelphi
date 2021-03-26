@@ -44,7 +44,7 @@ var
   FormProduct: TFormProduct;
   Product: TProduct;
 begin
-  Product := TProduct.Create(-1, '');
+  Product := TProduct.Create(-1, '', '', 0);
   FormProduct := TFormProduct.CreateWithProduct(Self, Product);
 
   FormProduct.ShowModal;
